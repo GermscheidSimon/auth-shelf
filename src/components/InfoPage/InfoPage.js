@@ -44,6 +44,26 @@ class InfoPage extends React.Component {
 
   }
 
+  deleteItem = (event, param) => {
+    console.log(event, param)
+    let itemdata = {
+      id: param
+    }
+    this.props.dispatch({
+      type: 'DELETE_ITEM',
+      payload: itemdata
+    })
+  }
+
+  // function onclick( ){
+
+  //   let event;
+  //   function(event){
+  //     this.deleteitem(event){
+
+  //     }
+  //   }
+  // }
 
   render() {
     return (
@@ -54,7 +74,13 @@ class InfoPage extends React.Component {
         <button onClick={this.addToShelf}>Add To Shelf</button>
         <ul>
           {this.props.reduxState.shelfReducer.map( item => {
-            return <li><p>{item.description}</p><img className="itemImage" src={item.image_url} alt={item.description}></img></li>
+            return (
+            <li>
+              <p>{item.description}</p>
+              <img className="itemImage" src={item.image_url} alt={item.description}/>
+              <button onClick={(event) => this.deleteItem(event, item.id)}>Delete From Shelf</button>
+            </li>
+            );
           })}
         </ul>
       </div>
