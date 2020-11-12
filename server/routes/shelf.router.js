@@ -53,13 +53,13 @@ router.delete('/:id', (req, res) => {
       WHERE "id" = $1
       AND   "user_id" = $2
     `;
-  pool.query(testQuery, [req.params.id, req.user.id]).then((result) => {
-    console.log('success deleting item', result);
-    res.send(result);
-  }).catch((error) => {
-    console.log('error in deleting item', error);
-    res.sendStatus(500);
-  })
+    pool.query(testQuery, [req.params.id, req.user.id]).then((result) => {
+      console.log('success deleting item', result);
+      res.send(result);
+    }).catch((error) => {
+      console.log('error in deleting item', error);
+      res.sendStatus(500);
+    })
   } else {
     res.sendStatus(403)
   }
