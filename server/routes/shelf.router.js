@@ -2,16 +2,22 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * Get all of the items on the shelf
- */
+
+// Get all of the items on the shelf
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+
+  let queryText = `SELECT * FROM "item";`;
+
+  pool.query(queryText).then((result) => [
+    res.send(result.rows)
+  ]).catch((error) => {
+    console.log('error in get all the things', error);
+    res.sendStatus(500);
+  })
 });
 
-/**
- * Add an item for the logged in user to the shelf
- */
+
+// Add an item for the logged in user to the shelf
 router.post('/', (req, res) => {
   // code here
 });
@@ -38,11 +44,18 @@ router.get('/count', (req, res) => {
   // GET /count route code here
 });
 
-/**
- * Return a specific item by id
- */
+
+// Should return all items for certain user_id
 router.get('/:id', (req, res) => {
-  // GET item route code here
+  
+  let queryText = `select * from item where user_id = $1;`;
+
+  pool.query(queryText, [req.user.id]).then((result) => {
+    res.send(result.rows);
+  }).catch((error) => {
+    console.log('error in getting specific items', error);
+    res.sendStatus(500);
+  })
 });
 
 module.exports = router;
