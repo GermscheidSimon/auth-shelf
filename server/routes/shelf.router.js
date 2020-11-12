@@ -21,18 +21,19 @@ router.get('/', (req, res) => {
 
 // Add an item for the logged in user to the shelf
 router.post('/', (req, res) => {
-  
+  console.log('req.bod', req.body);
+    
   let queryText = `insert into item (description, image_url, user_id)
-     values ($1, $2, $3);`;
+    values ($1, $2, $3);`;
 
-      pool.query(queryText,[req.body.description, req.body.image_url, req.user.id]).
-      then((result) => {
-        console.log('item added to shelf');
-        res.sendStatus(201)
-      }).catch((error) => {
-            console.log('error in adding the new item', error);
-            res.sendStatus(500);
-      });
+    pool.query(queryText,[req.body.description, req.body.image_url, req.user.id]).
+    then((result) => {
+      console.log('item added to shelf');
+      res.sendStatus(201)
+    }).catch((error) => {
+      console.log('error in adding the new item', error);
+      res.sendStatus(500);
+    });
 });
 
 // Delete an item if it's something the logged in user added

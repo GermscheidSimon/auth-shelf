@@ -4,7 +4,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 //send axios request to shelf.router to get all items from shelf DB
 function* addItemSaga(action) {
   try{
-    yield axios.post('/api/shelf', action.payload)
+    yield axios.post('/api/shelf', action.payload.item)
     yield put({
         type: "FETCH_SHELF"
     })
