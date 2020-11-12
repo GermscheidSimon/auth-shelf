@@ -22,8 +22,9 @@ router.get('/', (req, res) => {
 // Add an item for the logged in user to the shelf
 router.post('/', (req, res) => {
   console.log('req.bod', req.body);
-    
-  let queryText = `insert into item (description, image_url, user_id)
+
+  if (req.isAuthenticated()) {
+    let queryText = `insert into item (description, image_url, user_id)
     values ($1, $2, $3);`;
 
     pool.query(queryText,[req.body.description, req.body.image_url, req.user.id]).
@@ -34,19 +35,35 @@ router.post('/', (req, res) => {
       console.log('error in adding the new item', error);
       res.sendStatus(500);
     });
+  } else {
+    res.sendStatus(403)
+  }
+    
+  
 });
 
 // Delete an item if it's something the logged in user added
 router.delete('/:id', (req, res) => {
-  let queryText = `delete from item where id = $1;`;
 
-  pool.query(queryText, [req.params.id]).then((result) => {
+  if (req.isAuthenticated()) {
+    // delete item (using id) where user_id = req.user.id
+    let queryText = `delete from item where id = $1;`;
+    let testQuery = `
+    DELETE FROM "item" 
+      WHERE "id" = $1
+      AND   "user_id" = $2
+    `;
+  pool.query(testQuery, [req.params.id, req.user.id]).then((result) => {
     console.log('success deleting item', result);
-    res.sendStatus(200);
+    res.send(result);
   }).catch((error) => {
     console.log('error in deleting item', error);
     res.sendStatus(500);
   })
+  } else {
+    res.sendStatus(403)
+  }
+  
 });
 
 /**

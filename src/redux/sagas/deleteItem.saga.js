@@ -4,7 +4,11 @@ import { put, takeEvery } from 'redux-saga/effects';
 //send axios request to shelf.router to get all items from shelf DB
 function* deleteItemSaga(action) {
   try{
-    yield axios.delete(`/api/shelf/${action.payload.id}`, )
+    const results = yield axios.delete(`/api/shelf/${action.payload.id}`, )
+    // yield console.log(results);
+    // yield  (results.data.rowCount == 0) {
+    //         alert('nothing was deleted')
+    //       }   
     yield put({
         type: "FETCH_SHELF"
     })
