@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   })
 });
 
-//{ "description": "test", "image_url": "test" }
+
 
 // Add an item for the logged in user to the shelf
 router.post('/', (req, res) => {
@@ -82,7 +82,7 @@ router.get('/count', (req, res) => {
 });
 
 
-// Should return all items for certain user_id
+// Will return all items for certain user_id
 router.get('/:id', (req, res) => {
   
   let queryText = `SELECT * FROM "item" WHERE "user_id" = $1;`;
