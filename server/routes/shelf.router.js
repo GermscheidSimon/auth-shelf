@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   })
 });
 
-//{ "description": "test", "image_url": "test" }
+
 
 // Add an item for the logged in user to the shelf
 router.post('/', (req, res) => {
@@ -53,13 +53,13 @@ router.delete('/:id', (req, res) => {
       WHERE "id" = $1
       AND   "user_id" = $2
     `;
-  pool.query(testQuery, [req.params.id, req.user.id]).then((result) => {
-    console.log('success deleting item', result);
-    res.send(result);
-  }).catch((error) => {
-    console.log('error in deleting item', error);
-    res.sendStatus(500);
-  })
+    pool.query(testQuery, [req.params.id, req.user.id]).then((result) => {
+      console.log('success deleting item', result);
+      res.send(result);
+    }).catch((error) => {
+      console.log('error in deleting item', error);
+      res.sendStatus(500);
+    })
   } else {
     res.sendStatus(403)
   }
@@ -82,7 +82,7 @@ router.get('/count', (req, res) => {
 });
 
 
-// Should return all items for certain user_id
+// Will return all items for certain user_id
 router.get('/:id', (req, res) => {
   
   let queryText = `SELECT * FROM "item" WHERE "user_id" = $1;`;

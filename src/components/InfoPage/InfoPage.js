@@ -1,18 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux'
+import './InfoPage.css'
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
-
-// const InfoPage = () => (
-//   <div>
-//     <p>
-//       Shelf Page
-//     </p>
-//   </div>
-// );
 
 class InfoPage extends React.Component {
   state = {
@@ -55,16 +48,6 @@ class InfoPage extends React.Component {
     })
   }
 
-  // function onclick( ){
-
-  //   let event;
-  //   function(event){
-  //     this.deleteitem(event){
-
-  //     }
-  //   }
-  // }
-
   render() {
     return (
       <div>
@@ -78,7 +61,7 @@ class InfoPage extends React.Component {
             <li>
               <p>{item.description}</p>
               <img className="itemImage" src={item.image_url} alt={item.description}/>
-              <button onClick={(event) => this.deleteItem(event, item.id)}>Delete From Shelf</button>
+              <button id="deleteBtn" onClick={(event) => this.deleteItem(event, item.id)}>Delete From Shelf</button>
             </li>
             );
           })}
